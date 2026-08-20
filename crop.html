@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Crop Recommendation System</h2>
+        <form id="cropForm" action="/crop" method="POST">
+            <div class="form-group">
+                <label for="temperature">Temperature (°C):</label>
+                <input type="number" id="temperature" name="temperature" required>
+            </div>
+            <div class="form-group">
+                <label for="humidity">Humidity (%):</label>
+                <input type="number" id="humidity" name="humidity" required>
+            </div>
+            <div class="form-group">
+                <label for="moisture">Moisture (%):</label>
+                <input type="number" id="moisture" name="moisture" required>
+            </div>
+            <div class="form-group">
+                <label for="soil_type">Soil Type:</label>
+                <select id="soil_type" name="soil_type" required>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Black">Black</option>
+                    <option value="Red">Red</option>
+                    <option value="Clayey">Clayey</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nitrogen">Nitrogen (ppm):</label>
+                <input type="number" id="nitrogen" name="nitrogen" required>
+            </div>
+            <div class="form-group">
+                <label for="potassium">Potassium (ppm):</label>
+                <input type="number" id="potassium" name="potassium" required>
+            </div>
+            <div class="form-group">
+                <label for="phosphorous">Phosphorous (ppm):</label>
+                <input type="number" id="phosphorous" name="phosphorous" required>
+            </div>
+            <button type="submit" class="btn">Predict Crop</button>
+        </form>
+
+        <div id="result" class="result"></div>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById("cropForm").addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            const formData = new FormData(this);  // Collect form data
+            const data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;  // Convert form data to a key-value object
+            });
+
+            // Send form data as a POST request to the Flask backend's '/crop' route
+            fetch('/crop', {
+                method: 'POST',
+                body: new URLSearchParams(data)  // Send data as URL-encoded form data
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(result => {
+                // Handle successful response
+                if (result.error) {
+                    document.getElementById("error").innerText = result.error;  // Show error message
+                    document.getElementById("result").innerText = '';
+                } else {
+                    document.getElementById("result").innerText = `Predicted Crop Type: ${result.predicted_crop}`;  // Show prediction
+                    document.getElementById("error").innerText = '';
+                }
+            })
+            .catch(error => {
+                // Handle network or other errors
+                document.getElementById("error").innerText = "An error occurred while fetching the prediction.";
+                document.getElementById("result").innerText = '';
+            });
+        });
+    </script>
+
+</body>
+</html>

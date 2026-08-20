@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriGuard - Front Page</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('static/images/Green%20Modern%20Minimalist%20Agrifarm%20Company%20Presentation.png'); /* Ensure this path is correct */
+            background-size: cover;
+            background-position: center;
+            color: white;  /* Text Color for contrast */
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        #front-page {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #f2f2f2;
+            margin-bottom: 30px;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tab {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .tab:hover {
+            transform: translateY(-10px);  /* Slight lift effect */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab h2 {
+            margin-bottom: 15px;
+            color: #4CAF50;  /* Green color for headings */
+            font-size: 1.5em;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Transparent clicked effect */
+        .tab.clicked {
+            background-color: rgba(255, 255, 255, 0.5); /* 50% transparent white */
+        }
+
+        .tab-container a {
+            text-decoration: none;
+        }
+
+        /* Leaf Disease Prediction */
+        .leaf-disease-tab {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            margin: 20px auto;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .leaf-disease-tab h2 {
+            margin-bottom: 15px;
+            color: #4CAF50;
+            font-size: 1.5em;
+        }
+
+        .leaf-disease-tab button {
+            font-size: 1.2em;
+            padding: 12px 25px;
+        }
+
+    </style>
+</head>
+<body>
+
+<section id="front-page">
+    <div class="container">
+        <h1>Welcome to AgriGuard</h1>
+        <p>Your one-stop solution for farming and crop management!</p>
+
+        <div class="tab-container">
+            <!-- Crop Recommendation -->
+            <div class="tab" onclick="toggleTransparency(this)">
+                <h2>Crop Recommendation System</h2>
+                <a href="/crop">
+                    <button>Predict Crop</button>
+                </a>
+            </div>
+
+            <!-- Fertilizer Prediction -->
+            <div class="tab" onclick="toggleTransparency(this)">
+                <h2>Fertilizer Prediction</h2>
+                <a href="/fertilizer">
+                    <button>Predict Fertilizer</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Leaf Disease Prediction -->
+<div class="leaf-disease-tab" onclick="toggleTransparency(this)">
+    <h2>Leaf Disease Prediction</h2>
+    <a href="/predict">
+        <button>Upload Leaf Image</button>
+    </a>
+</div>
+
+<!-- Add your external JavaScript file -->
+<script src="static/script.js"></script>
+
+<!-- JavaScript to handle the transparent effect -->
+<script>
+    function toggleTransparency(element) {
+        // Toggle the 'clicked' class to make the container transparent
+        element.classList.toggle('clicked');
+    }
+</script>
+
+</body>
+</html>
